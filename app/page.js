@@ -1,20 +1,24 @@
-'use client'
+"use client"
 
-import Image from 'next/image'
-import { useSession,signIn,signOut } from 'next-auth/react'
-
+import Layout from "@/components/layout"
+import { useSession } from "next-auth/react"
+import Image from "next/image";
 
 export default function Home() {
-  const { data: session} = useSession()
-  if(!session)
-  {return (
-    <div className='bg-blue-900  h-screen w-screen flex items-center '>
-    <div className='text-center w-full'>
-      <button onClick ={() => signIn('google')} className='bg-white px-2 py-1 rounded-lg  '>Login with Google</button>
-    </div>
-    </div>
-  )}
+  const { data : session} = useSession(); 
+  
   return(
-    <div>logged in{session.user.email}</div>
+   <Layout>
+    <div className="text-blue-900 flex justify-between">
+      <h2>
+     Hello,<b>{session?.user.name}</b>
+     </h2>
+     <div className="flex gap-1 bg-gray-300  text-black rounded-lg overflow-hidden">
+  <img src={session?.user?.image}  alt=""  width={20} height={10} />
+   {session?.user?.name}
+     </div>
+   
+    </div>
+   </Layout>
   )
 }
